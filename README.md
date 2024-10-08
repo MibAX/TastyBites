@@ -89,6 +89,11 @@ In this video, we will walk through how to create a new MySQL database and user.
 
 ### Configuring ABP to Use Our Database
 After creating the database and user, we'll configure ABP to connect to this database by updating the `appsettings.json` file.
+```
+"ConnectionStrings": {
+  "Default": "Server=localhost;Port=3306;Database=tasty-bites;Uid=tasty-bites-db-user;Pwd=P@ssw0rd!;"
+},
+```
 
 ### Updating the Database with the Initial Migration
 Before running the project, you need to ensure that the database is up to date by applying the initial migration.
