@@ -21,13 +21,9 @@ dotnet tool install -g Volo.Abp.Cli --version 7.4.0
 ```
 ### Installing Angular CLI
 ```
-npm install -g @angular/cli@18.2.7
+npm install -g @angular/cli@16.2.16
 ```
 
-``` correction
-npm uninstall -g @angular/cli
-npm install -g @angular/cli@17.1.2
-```
 ### Installing the XAMPP Server
 - version: 8.0.30
 - make sure configure to run as administrator  
@@ -59,16 +55,15 @@ Now, we will create the ABP project inside the repository:
 abp new TastyBites -u angular -dbms MySQL -m none --theme basic --pwa  -csf --version 7.4.5
 ```
 
-
 #### Explanation of the command:
 - `TastyBites`: This is the name of your project.
 - `-u angular`: Specifies Angular as the UI framework.
-- `-dbms MySQL`: Configures MySQL as the database.
-- `-m none`: Creates the project without modules (basic setup).
+- `-dbms MySQL`: Configures MySQL as the database management system.
+- `-m none`: Creates the project without mobile modules (basic setup).
 - `--theme basic`: Adds a basic theme to the UI.
 - `--pwa`: Enables Progressive Web App (PWA) support.
-- `-csf`: Enables Cross-Site Request Forgery (CSRF) protection. 
- - `--version 7.4.5`: Specifies the ABP framework version to use for this project (7.4.5).
+- `-csf`: Creates a subfolder to contain all ABP-related files.
+- `--version 7.4.5`: Specifies the ABP framework version to use for this project (7.4.5).
 
 ### Summary
 In this chapter, we successfully set up our GitHub repository, cloned it, and created our first ABP project. You are now ready to start building your full-stack application using ABP.io!
