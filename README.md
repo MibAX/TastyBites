@@ -124,4 +124,4 @@ npm install bootstrap-icons
 
 
 ### Summary
-In this chapter, we successfully started the database server, created the database and user, configured ABP to connect to the database, updated the database schema, ran the backend API, installed frontend dependencies, generated API proxies, and served the Angular app. Your TastyBites project is now fully operational and ready for development and testing!
+In this chapter, we successfully started the database server, created the database and user, configured ABP to connect to the database, updated the database schema, ran the backend API, installed frontend dependencies, and served the Angular app. Your TastyBites project is now fully operational and ready for development and testing!
