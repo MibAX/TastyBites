@@ -127,12 +127,13 @@ In this chapter, we successfully started the database server, created the databa
 
 
 
-## 04 Building Backend CRUD Endpoints for Recipes
 
-### 04.01 What We Will Build in This Chapter
+## 04: Building Backend CRUD Endpoints for Recipes
+
+### 04.01: What We Will Build in This Chapter
 In this chapter, we are going to create the parts of our app that let us add, view, change, and remove recipes from the database. This is known as **CRUD**, which stands for Create, Read, Update, and Delete. We'll start by setting up the recipe structure and then make it possible to save and manage recipes in the database.
 
-### 04.02 Terminology
+### 04.02: Terminology
 
 In order to understand this chapter, it's important to familiarize ourselves with some key terminology that we will encounter.
 
@@ -146,7 +147,7 @@ to the database.
 development of CRUD services.
 - **`Swagger`**: An open-source tool used for documenting and testing RESTful APIs, providing a user interface to interact with the endpoints.
 
-### 04.03 Creating the Entity Class
+### 04.03: Creating the Entity Class
 To start, we will define our entity class, which represents the data structure we want to manage in our application. The entity will include basic properties such as `Name` and `Description`.
 
 ```csharp
@@ -157,7 +158,7 @@ To start, we will define our entity class, which represents the data structure w
     }
 ```
 
-### 04.04 Updating the DbContext
+### 04.04: Updating the DbContext
 Next, we need to update our `WasfatDbContext` class to include the new entity. This will allow ABP to manage the entity in the database.
 
 Add the following line to your `WasfatDbContext` class public properties:
@@ -178,7 +179,7 @@ Then, configure the entity within the `OnModelCreating` method:
         });
 ```
 
-### 04.05 Creating a Migration
+### 04.05: Creating a Migration
 After updating the `DbContext`, we need to create a new migration to apply the changes to the database. This step will generate the necessary scripts to update the database schema.
 
 ```bash
@@ -186,14 +187,14 @@ Add-Migration CreateRecipesTable
 
 ```
 
-### 04.05 Applying the Migration
+### 04.06: Applying the Migration
 Once the migration has been created, the next step is to update the database to apply the migration. This will modify the database schema based on the changes defined in the migration.
 
 ```bash
 Update-Database
 ```
 
-### 04.06 Creating the Data Transfer Object (DTO)
+### 04.07: Creating the Data Transfer Object (DTO)
 DTOs are used to transfer data between the application layers. In this section, we will create DTOs for the entity to be used in service methods.
 
 ```csharp
@@ -204,7 +205,7 @@ DTOs are used to transfer data between the application layers. In this section, 
     }
 ```
 
-### 04.07 Setting Up the Mapper Profile
+### 04.08: Setting Up the Mapper Profile
 To map between the entity and its DTO, we need to create a `MapperProfile`. This profile will handle the conversion between the entity and its corresponding DTOs.
 
 ```bash
@@ -217,7 +218,7 @@ To map between the entity and its DTO, we need to create a `MapperProfile`. This
     }
 ```
 
-### 04.08 Defining the Service Interface
+### 04.09: Defining the Service Interface
 The service interface defines the contract for our service, specifying which operations are available. Here, we will implement the `ICrudAppService` interface to provide basic CRUD functionality.
 
 ```csharp
@@ -229,7 +230,7 @@ The service interface defines the contract for our service, specifying which ope
     }
 ```
 
-### 04.09 Implementing the Service
+### 04.10: Implementing the Service
 The service class will implement the CRUD operations defined in the service interface. We will extend the `CrudAppService` base class, which provides default implementations for common CRUD operations.
 
 ```csharp
@@ -245,11 +246,11 @@ The service class will implement the CRUD operations defined in the service inte
     }
 ```
 
-### 04.10 Understanding Service vs. Service Interface
+### 04.11: Understanding Service vs. Service Interface
 A service interface defines the contract (methods) that a service class must implement, while the service class provides the actual implementation of these methods, handling the business logic. The interface allows for flexibility, enabling different implementations of the service.
 
-### 04.11 Exploring the API with Swagger
+### 04.12: Exploring the API with Swagger
 Once the service is implemented, we can use Swagger to explore the generated API and interact with our newly created CRUD operations. This section will guide you through testing the API endpoints using the Swagger UI.
 
-### Summary
+### 04.12: Summary
 In this chapter, we successfully created a new entity and implemented a complete CRUD functionality for it using ABP.io. We covered creating the entity class, updating the `DbContext`, creating and applying database migrations, setting up DTOs, implementing the service layer, and testing the API with Swagger. With these steps, you now have a foundational understanding of managing entities in a full-stack ABP application.
