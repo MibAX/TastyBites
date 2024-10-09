@@ -160,9 +160,9 @@ To start, we will define our entity class, which represents the data structure w
 ```
 
 ### 04.04 - Updating the DbContext
-Next, we need to update our `WasfatDbContext` class to include the new entity. This will allow ABP to manage the entity in the database.
+Next, we need to update our `TastyBitesDbContext` class to include the new entity. This will allow ABP to manage the entity in the database.
 
-Add the following line to your `WasfatDbContext` class public properties:
+Add the following line to your `TastyBitesDbContext` class public properties:
 
 ```csharp
 public DbSet<Recipe> Recipes { get; set; }
@@ -174,8 +174,8 @@ Then, configure the entity within the `OnModelCreating` method:
 
         builder.Entity<Recipe>(b =>
         {
-            b.ToTable(WasfatConsts.DbTablePrefix + "Recipes",
-                WasfatConsts.DbSchema);
+            b.ToTable(TastyBitesConsts.DbTablePrefix + "Recipes",
+                TastyBitesConsts.DbSchema);
             b.ConfigureByConvention();
         });
 ```
