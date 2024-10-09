@@ -122,6 +122,133 @@ we used ChatGpt to troubleshoot angular serving problem problem and we got this 
 npm install bootstrap-icons
 ```
 
-
 ### Summary
 In this chapter, we successfully started the database server, created the database and user, configured ABP to connect to the database, updated the database schema, ran the backend API, installed frontend dependencies, and served the Angular app. Your TastyBites project is now fully operational and ready for development and testing!
+
+
+## Building Backend CRUD Endpoints for Recipes
+
+### What We Will Build in This Chapter
+In this chapter, we are going to create the parts of our app that let us add, view, change, and remove recipes from the database. This is known as **CRUD**, which stands for Create, Read, Update, and Delete. We'll start by setting up the recipe structure and then make it possible to save and manage recipes in the database.
+
+### Terminology
+
+In order to understand this chapter, it's important to familiarize ourselves with some key terminology that we will encounter.
+
+- **`Entity`**: A class that represents a data model in the application. It corresponds to a table in the database and typically has properties that map to columns in that table. For example, a `Recipe` entity might have properties like `Name` and `Description`, which would be represented as columns in a `Recipes` table in the database.
+- **`EntityDTO (Data Transfer Object)`**: An object used to transfer data between different layers of an application, such as from the backend to the frontend, without exposing the entire entity.
+- **`Mapping`**: The process of converting data from one format to another, such as from an entity to a DTO or vice versa.
+- **`ReverseMap`**: A method in AutoMapper used to configure bidirectional mapping between two types, allowing data to be converted back and forth.
+- **`CRUD`**: An acronym for Create, Read, Update, Delete, which are the basic operations for managing data in an application.
+to the database.
+- **`Migration`**: A way to version control changes to the database schema, such as creating or altering tables and columns.
+development of CRUD services.
+- **`Swagger`**: An open-source tool used for documenting and testing RESTful APIs, providing a user interface to interact with the endpoints.
+
+### Creating the Entity Class
+To start, we will define our entity class, which represents the data structure we want to manage in our application. The entity will include basic properties such as `Name` and `Description`.
+
+```csharp
+    public class Recipe : Entity<int>
+    {
+        public string Name { get; set; }
+        public string Description { get; set; } 
+    }
+```
+
+### Updating the DbContext
+Next, we need to update our `WasfatDbContext` class to include the new entity. This will allow ABP to manage the entity in the database.
+
+Add the following line to your `WasfatDbContext` class public properties:
+
+```csharp
+public DbSet<Recipe> Recipes { get; set; }
+```
+
+Then, configure the entity within the `OnModelCreating` method:
+
+```csharp
+
+        builder.Entity<Recipe>(b =>
+        {
+            b.ToTable(WasfatConsts.DbTablePrefix + "Recipes",
+                WasfatConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+```
+
+### Creating a Migration
+After updating the `DbContext`, we need to create a new migration to apply the changes to the database. This step will generate the necessary scripts to update the database schema.
+
+```bash
+Add-Migration CreateRecipesTable
+
+```
+
+### Applying the Migration
+Once the migration has been created, the next step is to update the database to apply the migration. This will modify the database schema based on the changes defined in the migration.
+
+```bash
+Update-Database
+```
+
+### Creating the Data Transfer Object (DTO)
+DTOs are used to transfer data between the application layers. In this section, we will create DTOs for the entity to be used in service methods.
+
+```csharp
+    public class RecipeDto : EntityDto<int>
+    {
+        public string Name { get; set; }
+        public string Description { get; set; } 
+    }
+```
+
+### Setting Up the Mapper Profile
+To map between the entity and its DTO, we need to create a `MapperProfile`. This profile will handle the conversion between the entity and its corresponding DTOs.
+
+```bash
+    public class RecipeMapperProfile : Profile
+    {
+        public RecipeMapperProfile()
+        {
+            CreateMap<Recipe, RecipeDto>().ReverseMap();
+        }
+    }
+```
+
+### Defining the Service Interface
+The service interface defines the contract for our service, specifying which operations are available. Here, we will implement the `ICrudAppService` interface to provide basic CRUD functionality.
+
+```csharp
+    public interface IRecipeAppService : ICrudAppService<
+             RecipeDto,
+             int,
+             PagedAndSortedResultRequestDto>
+    {
+    }
+```
+
+### Implementing the Service
+The service class will implement the CRUD operations defined in the service interface. We will extend the `CrudAppService` base class, which provides default implementations for common CRUD operations.
+
+```csharp
+    public class RecipeAdminAppService : CrudAppService<Recipe, RecipeDto, int, PagedAndSortedResultRequestDto>, IRecipeAppService
+    {
+        public RecipeAdminAppService(
+            IRepository<Recipe, int> repository
+            )
+        : base(repository)
+        {
+
+        }
+    }
+```
+
+### Understanding Service vs. Service Interface
+This section will explain the difference between the service interface and the service implementation, detailing their roles and how they work together to enable dependency injection and unit testing.
+
+### Exploring the API with Swagger
+Once the service is implemented, we can use Swagger to explore the generated API and interact with our newly created CRUD operations. This section will guide you through testing the API endpoints using the Swagger UI.
+
+### Summary
+In this chapter, we successfully created a new entity and implemented a complete CRUD functionality for it using ABP.io. We covered creating the entity class, updating the `DbContext`, creating and applying database migrations, setting up DTOs, implementing the service layer, and testing the API with Swagger. With these steps, you now have a foundational understanding of managing entities in a full-stack ABP application.
