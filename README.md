@@ -145,18 +145,22 @@ In order to understand this chapter, it's important to familiarize ourselves wit
 ### 04.03 - Creating the Entity Class
 To start, we will define our entity class, which represents the data structure we want to manage in our application. The entity will include basic properties such as `Name` and `Description`.
 
+Location:  
+`src`\\`TastyBites.Domain`\\`Recipes`\\`Recipe.cs`:
+
 ```csharp
-    public class Recipe : Entity<int>
-    {
-        public string Name { get; set; }
-        public string Description { get; set; } 
-    }
+public class Recipe : Entity<int>
+{
+    public string Name { get; set; }
+    public string Description { get; set; } 
+}
 ```
 
 ### 04.04 - Adding the Recipe Entity to the DbContext
 Next, we need to update our `TastyBitesDbContext` class to include the new entity. This will allow ABP to manage the entity in the database.
 
-Add the following line to your `TastyBitesDbContext` class public properties:
+Location:  
+`src`\\`TastyBites.EntityFrameworkCore`\\`EntityFrameworkCore`\\`TastyBitesDbContext.cs`:
 
 ```csharp
 public DbSet<Recipe> Recipes { get; set; }
@@ -165,17 +169,22 @@ public DbSet<Recipe> Recipes { get; set; }
 ### 04.05 - Mapping the Recipe Entity to a Database Table
 Then, configure the entity within the `OnModelCreating` method:
 
+Location:  
+`src`\\`TastyBites.EntityFrameworkCore`\\`EntityFrameworkCore`\\`TastyBitesDbContext.cs`:
+
 ```csharp
-        builder.Entity<Recipe>(b =>
-        {
-            b.ToTable(TastyBitesConsts.DbTablePrefix + "Recipes",
-                TastyBitesConsts.DbSchema);
-            b.ConfigureByConvention();
-        });
+builder.Entity<Recipe>(b =>
+{
+    b.ToTable(TastyBitesConsts.DbTablePrefix + "Recipes",
+        TastyBitesConsts.DbSchema);
+    b.ConfigureByConvention();
+});
 ```
 
 ### 04.06 - Adding a Migration
 After updating the `DbContext`, we need to create a new migration to apply the changes to the database. This step will generate the necessary scripts to update the database schema.
+
+Open the **Package Manager Console** and set the **Default project** to `src`\\`TastyBites.EntityFrameworkCore`. Then, run the following command:
 
 ```bash
 Add-Migration CreateRecipesTable
@@ -184,6 +193,8 @@ Add-Migration CreateRecipesTable
 ### 04.07 - Applying the Migration
 Once the migration has been created, the next step is to update the database to apply the migration. This will modify the database schema based on the changes defined in the migration.
 
+In the **Package Manager Console**, with the **Default project** still set to `src`\\`TastyBites.EntityFrameworkCore`, run the following command:
+
 ```bash
 Update-Database
 ```
@@ -191,53 +202,65 @@ Update-Database
 ### 04.08 - Creating the Data Transfer Object (DTO)
 DTOs are used to transfer data between the application layers. In this section, we will create DTOs for the entity to be used in service methods.
 
+Location:  
+`src`\\`TastyBites.Application.Contracts`\\`Recipes`\\`RecipeDto.cs`:
+
 ```csharp
-    public class RecipeDto : EntityDto<int>
-    {
-        public string Name { get; set; }
-        public string Description { get; set; } 
-    }
+public class RecipeDto : EntityDto<int>
+{
+    public string Name { get; set; }
+    public string Description { get; set; } 
+}
 ```
 
 ### 04.09 - Setting Up the Mapper Profile
 To map between the entity and its DTO, we need to create a `MapperProfile`. This profile will handle the conversion between the entity and its corresponding DTOs.
 
+Location:  
+`src`\\`TastyBites.Application`\\`Recipes`\\`RecipeMapperProfile.cs`:
+
 ```csharp
-    public class RecipeMapperProfile : Profile
+public class RecipeMapperProfile : Profile
+{
+    public RecipeMapperProfile()
     {
-        public RecipeMapperProfile()
-        {
-            CreateMap<Recipe, RecipeDto>().ReverseMap();
-        }
+        CreateMap<Recipe, RecipeDto>().ReverseMap();
     }
+}
 ```
 
 ### 04.10 - Defining the Service Interface
 The service interface defines the contract for our service, specifying which operations are available. Here, we will implement the `ICrudAppService` interface to provide basic CRUD functionality.
 
+Location:  
+`src`\\`TastyBites.Application.Contracts`\\`Recipes`\\`IRecipeAppService.cs`:
+
 ```csharp
-    public interface IRecipeAppService : ICrudAppService<
-             RecipeDto,
-             int,
-             PagedAndSortedResultRequestDto>
-    {
-    }
+public interface IRecipeAppService : ICrudAppService<
+         RecipeDto,
+         int,
+         PagedAndSortedResultRequestDto>
+{
+}
 ```
 
 ### 04.11 - Implementing the Service
 The service class will implement the CRUD operations defined in the service interface. We will extend the `CrudAppService` base class, which provides default implementations for common CRUD operations.
 
-```csharp
-    public class RecipeAdminAppService : CrudAppService<Recipe, RecipeDto, int, PagedAndSortedResultRequestDto>, IRecipeAppService
-    {
-        public RecipeAdminAppService(
-            IRepository<Recipe, int> repository
-            )
-        : base(repository)
-        {
+Location:  
+`src`\\`TastyBites.Application`\\`Recipes`\\`RecipeAdminAppService.cs`:
 
-        }
+```csharp
+public class RecipeAdminAppService : CrudAppService<Recipe, RecipeDto, int, PagedAndSortedResultRequestDto>, IRecipeAppService
+{
+    public RecipeAdminAppService(
+        IRepository<Recipe, int> repository
+        )
+    : base(repository)
+    {
+
     }
+}
 ```
 
 ### 04.12 - Exploring the API with Swagger
@@ -245,3 +268,4 @@ Once the service is implemented, we can use Swagger to explore the generated API
 
 ### 04.13 - Summary
 In this chapter, we successfully created a new entity and implemented a complete CRUD functionality for it using ABP.io. We covered creating the entity class, updating the `DbContext`, creating and applying database migrations, setting up DTOs, implementing the service layer, and testing the API with Swagger. With these steps, you now have a foundational understanding of managing entities in a full-stack ABP application.
+
