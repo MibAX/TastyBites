@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TastyBites.Recipes;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -50,6 +51,9 @@ public class TastyBitesDbContext :
     // Tenant Management
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
+
+    // Tasty Bites
+    public DbSet<Recipe> Recipes { get; set; }
 
     #endregion
 
