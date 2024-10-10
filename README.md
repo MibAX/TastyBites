@@ -138,8 +138,8 @@ In order to understand this chapter, it's important to familiarize ourselves wit
 - **`Entity`**: A class that represents a data model in the application. It corresponds to a table in the database and typically has properties that map to columns in that table. For example, a `Recipe` entity might have properties like `Name` and `Description`, which would be represented as columns in a `Recipes` table in the database.
 - **`EntityDTO (Data Transfer Object)`**: An object used to transfer data between different layers of an application, such as from the backend to the frontend, without exposing the entire entity.
 - **`Mapping`**: The process of converting data from one format to another, such as from an entity to a DTO or vice versa.
-- **`CRUD`**: An acronym for Create, Read, Update, Delete, which are the basic operations for managing data in an application.
 - **`Migration`**: A way to version control changes to the database schema, such as creating or altering tables and columns.
+- **`API`**: An acronym for Application Programming Interface, which provides a set of functions and protocols to allow applications to 
 - **`Swagger`**: An open-source tool used for documenting and testing RESTful APIs, providing a user interface to interact with the endpoints.
 
 ### 04.03 - Creating the Entity Class
