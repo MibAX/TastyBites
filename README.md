@@ -312,23 +312,56 @@ This is how to Import the Sample Data Provided in This Course:
 **⚠️ Note :** 
 > customPrefix_ is the prefix configured above in  `public const string DbTablePrefix = "customPrefix_"; `
 
-### 05.04 - Overriding the Read Operation - Get Single Recipe
+
+### 05.04 - Renaming & Assigning the Injected Repository to a Private Field
+
+1. **Declare a private readonly field** to store the injected repository:
+
+```csharp
+private readonly IRepository<Recipe, int> _recipesRepository;
+```
+
+2. Assign the injected repository to the private field:
+
+```csharp
+public RecipeAdminAppService(IRepository<Recipe, int> recipesRepository)
+    : base(recipesRepository)
+{
+    this._recipesRepository = recipesRepository;
+}
+```
+
+#### Full Example:
+
+```csharp
+public class RecipeAdminAppService : CrudAppService<Recipe, RecipeDto, int, PagedAndSortedResultRequestDto>, IRecipeAppService
+{
+    private readonly IRepository<Recipe, int> _recipesRepository;
+
+    public RecipeAdminAppService(IRepository<Recipe, int> recipesRepository)
+        : base(recipesRepository)
+    {
+        this._recipesRepository = recipesRepository; 
+    }
+}
+```
+
+
+### 05.05 - Overriding the Read Operation - Get Single Recipe
 We will now override the `GetAsync` method to add custom logic when retrieving a single recipe.
 
 ```csharp
         public override async Task<RecipeDto> GetAsync(int id)
-        {            
-            Recipe recipe = await Repository.GetAsync( id );
+        {
+            var recipe = await _recipesRepository.GetAsync(id);
 
-            recipe.Name = recipe.Name.Trim();
-
-            RecipeDto recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe );
+            var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
 
             return recipeDto;
         }
 ```
 
-### 05.05 - Overriding the Create Operation
+### 05.06 - Overriding the Create Operation
 Next, we'll override the `CreateAsync` method to add custom logic before saving a new recipe.
 
 ```csharp
@@ -347,7 +380,7 @@ Next, we'll override the `CreateAsync` method to add custom logic before saving 
         }
 ```
 
-### 05.06 - Overriding the Update Operation
+### 05.07 - Overriding the Update Operation
 We'll override the `UpdateAsync` method to add custom logic when updating a recipe.
 
 ```csharp
@@ -374,7 +407,7 @@ Avoid the following approach, as it assigns the input directly to `recipe` and c
 > `recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);`
 
 
-### 05.07 - Overriding the Delete Operation
+### 05.08 - Overriding the Delete Operation
 We'll override the `DeleteAsync` method to add any custom logic before deleting a recipe.
 
 ```csharp
@@ -392,7 +425,7 @@ We'll override the `DeleteAsync` method to add any custom logic before deleting 
         }
 ```
 
-### 05.08 - Overriding the Read Operation - Paged List
+### 05.09 - Overriding the Read Operation - Paged List
 We'll override the `GetListAsync` method to retrieve a paginated list of recipes.
 
 ```csharp
@@ -423,7 +456,7 @@ We'll override the `GetListAsync` method to retrieve a paginated list of recipes
         }
 ```
 
-### 05.09 - Adding a Custom Method - Get Recent Recipes
+### 05.10 - Adding a Custom Method - Get Recent Recipes
 Finally, we will add a new custom method, `GetRecentRecipesAsync`, to retrieve a few of the most recent recipes. 
 
 ```csharp
@@ -442,6 +475,5 @@ Finally, we will add a new custom method, `GetRecentRecipesAsync`, to retrieve a
         }
 ```
 
-### 05.10 - Summary
+### 05.11 - Summary
 In this chapter, we successfully customized each CRUD operation in ABP.io for managing recipes. We learned how to override the default CRUD operations to implement specific business logic. Additionally, we demonstrated how to extend the `CrudAppService` by adding a custom method (`GetRecentRecipesAsync`) to fetch the most recent recipes, showcasing how to go beyond the built-in CRUD operations. These steps give you full control over your application's behavior when interacting with the database, allowing for greater flexibility and tailored functionality within your project.
-
