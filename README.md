@@ -1,4 +1,3 @@
-
 # TastyBites
 
 # Mastering Full-Stack Development with ABP.io
@@ -268,4 +267,181 @@ Once the service is implemented, we can use Swagger to explore the generated API
 
 ### 04.13 - Summary
 In this chapter, we successfully created a new entity and implemented a complete CRUD functionality for it using ABP.io. We covered creating the entity class, updating the `DbContext`, creating and applying database migrations, setting up DTOs, implementing the service layer, and testing the API with Swagger. With these steps, you now have a foundational understanding of managing entities in a full-stack ABP application.
+
+***
+## 05 - Customizing The Crud Operations
+
+### 05.01 - What You Will Learn in This Chapter
+In this chapter, we will explore how to override the default CRUD operations provided by ABP.io. We'll customize each operation, including the ability to create, read, update, and delete recipes, to suit specific requirements. We will also cover how to import sample data, modify table prefixes, and handle paging in list results.
+
+### 05.02 - Terminology
+Before diving into the code, let's review some important terms that will be useful throughout this chapter.
+
+- **`Repository`**: A repository is an abstraction layer that provides a standardized interface for interacting with the database. Thinks about it as a middleman that handles the communication between the app and the database, making it easier to retrieve or save data without directly interacting with the database.
+
+- **`Pagination`**: A way to show a small part of the data, like displaying a few recipes at a time on a page, while also knowing how many total recipes there are.
+
+### 05.03 - Importing Sample Data 
+
+This is how sample data was exported during the video session.
+
+**Exporting the Data**:
+1. Go to **phpMyAdmin**.
+2. Select the **database**.
+3. Search for the **Recipes** table.
+4. Click the **Export** tab at the top menu.
+5. Click **Export** at the bottom of the page.
+
+You can download the sample file from the GitHub repo at:  
+`TastyBites`\\`Sample Data Files`\\`Chapter 05`\\`customPrefix_recipes.sql`:  
+
+**⚠️ Note :** 
+> customPrefix_ is the prefix configured above in  `public const string DbTablePrefix = "customPrefix_"; `
+
+
+This is how to Import the Sample Data Provided in This Course:
+
+**Importing the Data**:
+1. Go to **phpMyAdmin**.
+2. Select the **database**.
+3. Click the **Import** tab at the top menu.
+4. Choose the sample data file (`customPrefix_recipes.sql`).
+5. Scroll to the bottom and click **Import**.
+
+
+**⚠️ Note :** 
+> customPrefix_ is the prefix configured above in  `public const string DbTablePrefix = "customPrefix_"; `
+
+### 05.04 - Overriding the Read Operation - Get Single Recipe
+We will now override the `GetAsync` method to add custom logic when retrieving a single recipe.
+
+```csharp
+        public override async Task<RecipeDto> GetAsync(int id)
+        {            
+            Recipe recipe = await Repository.GetAsync( id );
+
+            recipe.Name = recipe.Name.Trim();
+
+            RecipeDto recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe );
+
+            return recipeDto;
+        }
+```
+
+### 05.05 - Overriding the Create Operation
+Next, we'll override the `CreateAsync` method to add custom logic before saving a new recipe.
+
+```csharp
+        public override async Task<RecipeDto> CreateAsync(RecipeDto input)
+        {
+            var recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);
+
+            // Custom logic
+            recipe.Name = recipe.Name.Trim();
+
+            await Repository.InsertAsync(recipe, autoSave: true);
+
+            var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+
+            return recipeDto;
+        }
+```
+
+### 05.06 - Overriding the Update Operation
+We'll override the `UpdateAsync` method to add custom logic when updating a recipe.
+
+```csharp
+        public override async Task<RecipeDto> UpdateAsync(int id, RecipeDto input)
+        {
+            var recipe = await Repository.GetAsync(id);
+
+            // Only the updated values from the input DTO will be applied to the recipe entity.
+            // IMPORTANT: Any values not present in the DTO will remain unchanged in the recipe.
+            ObjectMapper.Map<RecipeDto, Recipe>(input, recipe);
+            
+            await Repository.UpdateAsync(recipe, autoSave: true);
+
+            var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+
+            return recipeDto;
+        }
+```
+
+**⛔ Warning:**  
+Avoid the following approach, as it assigns the input directly to `recipe` and can result in loss of the original recipe state:
+
+> **Incorrect**: Assigning `input` to `recipe` directly  
+> `recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);`
+
+
+### 05.07 - Overriding the Delete Operation
+We'll override the `DeleteAsync` method to add any custom logic before deleting a recipe.
+
+```csharp
+        public override async Task DeleteAsync(int id)
+        {
+            var recipe = await Repository.GetAsync(id);
+
+            // Custom logic or checkup here
+            if (recipe.Name.Contains("Burger", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new UserFriendlyException("Recipes containing 'Mansaf' cannot be deleted!");
+            }
+
+            await Repository.DeleteAsync(id);
+        }
+```
+
+### 05.08 - Overriding the Read Operation - Paged List
+We'll override the `GetListAsync` method to retrieve a paginated list of recipes.
+
+```csharp
+        public override async Task<PagedResultDto<RecipeDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        {            
+            var totalCount = await Repository.GetCountAsync();
+            
+            var recipes = await Repository.GetPagedListAsync(
+                input.SkipCount,        
+                input.MaxResultCount,   
+                input.Sorting ?? nameof(Recipe.Name) // Sort by Name if no sorting provided
+            );
+
+            recipes.ForEach(recipe => 
+                { 
+                    recipe.Name = recipe.Name.Trim();
+                });
+
+            var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
+            
+            var pagedResult = new PagedResultDto<RecipeDto>(
+                totalCount,
+                recipeDtos 
+            );
+            
+            return pagedResult;
+
+        }
+```
+
+### 05.09 - Adding a Custom Method - Get Recent Recipes
+Finally, we will add a new custom method, `GetRecentRecipesAsync`, to retrieve a few of the most recent recipes. 
+
+```csharp
+        public async Task<List<RecipeDto>> GetRecentRecipesAsync(int count = 3)
+        {
+            var query = await Repository.GetQueryableAsync();
+
+            var recentRecipes = query
+                                 .OrderByDescending(recipe => recipe.Id)
+                                 .Take(count)
+                                 .ToList();
+
+            var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recentRecipes);
+
+            return recipeDtos;
+        }
+```
+
+### 05.10 - Summary
+In this chapter, we successfully customized each CRUD operation in ABP.io for managing recipes. We learned how to override the default CRUD operations to implement specific business logic. Additionally, we demonstrated how to extend the `CrudAppService` by adding a custom method (`GetRecentRecipesAsync`) to fetch the most recent recipes, showcasing how to go beyond the built-in CRUD operations. These steps give you full control over your application's behavior when interacting with the database, allowing for greater flexibility and tailored functionality within your project.
 
