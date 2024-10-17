@@ -327,7 +327,7 @@ private readonly IRepository<Recipe, int> _recipesRepository;
 public RecipeAdminAppService(IRepository<Recipe, int> recipesRepository)
     : base(recipesRepository)
 {
-    this._recipesRepository = recipesRepository;
+    _recipesRepository = recipesRepository;
 }
 ```
 
