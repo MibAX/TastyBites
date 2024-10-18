@@ -269,7 +269,7 @@ Once the service is implemented, we can use Swagger to explore the generated API
 In this chapter, we successfully created a new entity and implemented a complete CRUD functionality for it using ABP.io. We covered creating the entity class, updating the `DbContext`, creating and applying database migrations, setting up DTOs, implementing the service layer, and testing the API with Swagger. With these steps, you now have a foundational understanding of managing entities in a full-stack ABP application.
 
 ***
-## 05 - Customizing The Crud Operations
+## 05 - Customizing The CRUD Operations
 
 ### 05.01 - What You Will Learn in This Chapter
 In this chapter, we will explore how to override the default CRUD operations provided by ABP.io. We'll customize each operation, including the ability to create, read, update, and delete recipes, to suit specific requirements. We will also cover how to import sample data, modify table prefixes, and handle paging in list results.
