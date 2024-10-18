@@ -355,6 +355,9 @@ We will now override the `GetAsync` method to add custom logic when retrieving a
         {
             var recipe = await _recipesRepository.GetAsync(id);
 
+            // custome logic
+            recipe.Name = recipe.Name.Trim();
+
             var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
 
             return recipeDto;
@@ -369,7 +372,7 @@ Next, we'll override the `CreateAsync` method to add custom logic before saving 
         {
             var recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);
 
-            // Custom logic
+            // custom logic
             recipe.Name = recipe.Name.Trim();
 
             await _recipesRepository.InsertAsync(recipe, autoSave: true);
@@ -390,8 +393,8 @@ We'll override the `UpdateAsync` method to add custom logic when updating a reci
 
             // Only the available values from the input DTO will be applied to the recipe entity.
             // IMPORTANT: Any values not present in the DTO will remain unchanged in the recipe.
-            ObjectMapper.Map<RecipeDto, Recipe>(input, recipe);
-            
+            ObjectMapper.Map<RecipeDto, Recipe>(input,recipe);
+
             await _recipesRepository.UpdateAsync(recipe, autoSave: true);
 
             var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
@@ -415,10 +418,10 @@ We'll override the `DeleteAsync` method to add any custom logic before deleting 
         {
             var recipe = await _recipesRepository.GetAsync(id);
 
-            // Custom logic or checkup here
-            if (recipe.Name.Contains("Burger", StringComparison.OrdinalIgnoreCase))
+            // custom logic
+            if(recipe.Name.Contains("Shawarma", StringComparison.OrdinalIgnoreCase))
             {
-                throw new UserFriendlyException("Recipes containing 'Mansaf' cannot be deleted!");
+                throw new UserFriendlyException("you can not delete burgers");
             }
 
             await _recipesRepository.DeleteAsync(id);
@@ -430,29 +433,20 @@ We'll override the `GetListAsync` method to retrieve a paginated list of recipes
 
 ```csharp
         public override async Task<PagedResultDto<RecipeDto>> GetListAsync(PagedAndSortedResultRequestDto input)
-        {            
+        {
             var totalCount = await _recipesRepository.GetCountAsync();
-            
-            var recipes = await _recipesRepository.GetPagedListAsync(
-                input.SkipCount,        
-                input.MaxResultCount,   
-                input.Sorting ?? nameof(Recipe.Name) // Sort by Name if no sorting provided
-            );
 
-            recipes.ForEach(recipe => 
-                { 
-                    recipe.Name = recipe.Name.Trim();
-                });
+            var recipes = await _recipesRepository.GetPagedListAsync(
+                input.SkipCount,
+                input.MaxResultCount,
+                input.Sorting ?? nameof(Recipe.Name)
+                );
 
             var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
-            
-            var pagedResult = new PagedResultDto<RecipeDto>(
-                totalCount,
-                recipeDtos 
-            );
-            
-            return pagedResult;
 
+            var pagedResultDto = new PagedResultDto<RecipeDto>(totalCount, recipeDtos);
+
+            return pagedResultDto;
         }
 ```
 
@@ -460,18 +454,17 @@ We'll override the `GetListAsync` method to retrieve a paginated list of recipes
 Finally, we will add a new custom method, `GetRecentRecipesAsync`, to retrieve a few of the most recent recipes. 
 
 ```csharp
-        public async Task<List<RecipeDto>> GetRecentRecipesAsync(int count = 3)
+        public async Task<List<RecipeDto>> GetRecentAsync(int count = 3)
         {
             var query = await _recipesRepository.GetQueryableAsync();
 
             var recentRecipes = query
-                                 .OrderByDescending(recipe => recipe.Id)
-                                 .Take(count)
-                                 .ToList();
+                                .OrderByDescending( recipe => recipe.Id )
+                                .Take(count)
+                                .ToList();
+            var recentRecipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recentRecipes);
 
-            var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recentRecipes);
-
-            return recipeDtos;
+            return recentRecipeDtos;
         }
 ```
 
