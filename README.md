@@ -386,9 +386,9 @@ We'll override the `UpdateAsync` method to add custom logic when updating a reci
 ```csharp
         public override async Task<RecipeDto> UpdateAsync(int id, RecipeDto input)
         {
-            var recipe = await Repository.GetAsync(id);
+            var recipe = await _recipesRepository.GetAsync(id);
 
-            // Only the updated values from the input DTO will be applied to the recipe entity.
+            // Only the available values from the input DTO will be applied to the recipe entity.
             // IMPORTANT: Any values not present in the DTO will remain unchanged in the recipe.
             ObjectMapper.Map<RecipeDto, Recipe>(input, recipe);
             
@@ -413,7 +413,7 @@ We'll override the `DeleteAsync` method to add any custom logic before deleting 
 ```csharp
         public override async Task DeleteAsync(int id)
         {
-            var recipe = await Repository.GetAsync(id);
+            var recipe = await _recipesRepository.GetAsync(id);
 
             // Custom logic or checkup here
             if (recipe.Name.Contains("Burger", StringComparison.OrdinalIgnoreCase))
