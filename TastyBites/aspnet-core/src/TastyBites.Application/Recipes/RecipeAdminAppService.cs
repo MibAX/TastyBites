@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Application.Dtos;
+﻿using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
@@ -16,6 +17,18 @@ namespace TastyBites.Recipes
             _recipesRepository = recipesRepository;
         }
 
+
+        public override async Task<RecipeDto> GetAsync(int id)
+        {
+            var recipe = await _recipesRepository.GetAsync(id);
+
+            // custome logic
+            recipe.Name = recipe.Name.Trim();
+
+            var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+
+            return recipeDto;
+        }
 
 
 
