@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -59,6 +61,20 @@ namespace TastyBites.Recipes
             var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
 
             return recipeDto;
+        }
+
+
+        public override async Task DeleteAsync(int id)
+        {
+            var recipe = await _recipesRepository.GetAsync(id);
+
+            // custom logic
+            if (recipe.Name.Contains("Shawarma", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new UserFriendlyException("you can not delete Shawarmas");
+            }
+
+            await _recipesRepository.DeleteAsync(id);
         }
 
 
