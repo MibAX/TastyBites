@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.ObjectMapping;
 
 namespace TastyBites.Recipes
 {
@@ -75,6 +77,26 @@ namespace TastyBites.Recipes
             }
 
             await _recipesRepository.DeleteAsync(id);
+        }
+
+
+        public override async Task<PagedResultDto<RecipeDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        {
+            var totalCount = await _recipesRepository.GetCountAsync();
+
+            var recipes = await _recipesRepository.GetPagedListAsync(
+                input.SkipCount,
+                input.MaxResultCount,
+                input.Sorting ?? nameof(Recipe.Name)
+                );
+
+            // custom logic goes here
+
+            var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
+
+            var pagedResultDto = new PagedResultDto<RecipeDto>(totalCount, recipeDtos);
+
+            return pagedResultDto;
         }
 
 
