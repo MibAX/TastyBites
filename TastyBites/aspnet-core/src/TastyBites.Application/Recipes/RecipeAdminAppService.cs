@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.ObjectMapping;
 
 namespace TastyBites.Recipes
 {
@@ -97,6 +97,21 @@ namespace TastyBites.Recipes
             var pagedResultDto = new PagedResultDto<RecipeDto>(totalCount, recipeDtos);
 
             return pagedResultDto;
+        }
+
+
+        public async Task<List<RecipeDto>> GetRecentAsync(int count = 3)
+        {
+            var query = await _recipesRepository.GetQueryableAsync();
+
+            var recentRecipes = query
+                                .OrderByDescending(recipe => recipe.Id)
+                                .Take(count)
+                                .ToList();
+
+            var recentRecipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recentRecipes);
+
+            return recentRecipeDtos;
         }
 
 
