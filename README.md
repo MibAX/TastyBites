@@ -618,7 +618,16 @@ Before proceeding, let's clarify some key terms:
 
 ### 06.07 - Installing the Most Compatible ABP CLI Version
 
-1. Uninstall the Current ABP CLI Version
+
+1. Verify the Installed Version
+
+   After installation, verify the ABP CLI version:
+
+   ```bash
+   abp -v
+   ```
+
+2. Uninstall the Current ABP CLI Version if needed
 
    Run the following command to uninstall the existing ABP CLI version:
 
@@ -626,7 +635,7 @@ Before proceeding, let's clarify some key terms:
    dotnet tool uninstall -g Volo.Abp.Cli
    ```
 
-2. Install the Specific Version of ABP CLI
+3. Install the Specific Version of ABP CLI
 
    To install the desired version (e.g., `7.4.5`), run:
 
@@ -634,7 +643,7 @@ Before proceeding, let's clarify some key terms:
    dotnet tool install -g Volo.Abp.Cli --version 7.4.5
    ```
 
-3. Verify the Installed Version
+4. Verify the Installed Version
 
    After installation, verify the ABP CLI version:
 
