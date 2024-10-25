@@ -609,7 +609,7 @@ Before proceeding, let's clarify some key terms:
 2. Add the following section to document the versions selected:
 
    ```bash
-   ## CLI Versions Used in This Project
+   ## Versions Used in This Project
 
    ABP: 7.4.5
    Node: 18.20.4
@@ -753,7 +753,16 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
    cd C:\path\to\your\repos\tastybites\TastyBites\angular
    ```
 
-3. Install the Specific Angular CLI Version
+3. Uninstall the global Angular CLI first 
+
+   Run the following command to install the specific Angular CLI version (e.g., 16.2.16):
+   
+
+   ```bash
+   npm uninstall -g @angular/cli
+   ```
+
+3. Install the Specific Angular CLI Version Local
 
    Run the following command to install the specific Angular CLI version (e.g., 16.2.16):
    
@@ -882,7 +891,15 @@ Testing Node Runtime Compatibility Our Project
 
    Project name: TastyBites.HttpApi.Host
 
-7. **Serve the Angular Application**  
+7. **Generate the Proxies**  
+
+   After running the backend we can go ahead and generate the proxies:
+   
+   ```bash
+   abp generate-proxy -t ng
+   ```
+
+8. **Serve the Angular Application**  
 
    After ensuring everything is in place, serve the Angular application:
 
