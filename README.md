@@ -621,8 +621,6 @@ Before proceeding, let's clarify some key terms:
 
 1. Verify the Installed Version
 
-   After installation, verify the ABP CLI version:
-
    ```bash
    abp -v
    ```
@@ -643,7 +641,7 @@ Before proceeding, let's clarify some key terms:
    dotnet tool install -g Volo.Abp.Cli --version 7.4.5
    ```
 
-4. Verify the Installed Version
+4. Verify the Installed Version again
 
    After installation, verify the ABP CLI version:
 
