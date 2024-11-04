@@ -15,6 +15,29 @@ function configureRoutes(routesService: RoutesService) {
         order: 1,
         layout: eLayoutType.application,
       },
+      {
+        path: '/recipes',
+        name: '::Menu:Recipes',
+        iconClass: 'fas fa-home',
+        order: 2,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/recipes/list',
+        name: '::Menu:RecipesList',
+        parentName: '::Menu:Recipes',
+        iconClass: 'fas fa-home',
+        order: 1,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/recipes/crud',
+        name: '::Menu:CrudRecipe',
+        parentName: '::Menu:Recipes',
+        iconClass: 'fas fa-home',
+        order: 2,
+        layout: eLayoutType.application,
+      },
     ]);
   };
 }
