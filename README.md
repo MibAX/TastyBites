@@ -1066,13 +1066,17 @@ Define specific routes for the `RecipesList` and `CrudRecipe` components in `rec
 ```typescript
 const routes: Routes = [
   {
-    path: "list",
-    component: RecipesListComponent,
+    path: '',
+    component: RecipesListComponent
   },
   {
-    path: "crud",
-    component: CrudRecipeComponent,
+    path: 'list',
+    component: RecipesListComponent
   },
+  {
+    path: 'crud',
+    component: CrudRecipeComponent
+  }
 ];
 ```
 
