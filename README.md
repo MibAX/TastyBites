@@ -1031,6 +1031,7 @@ app/
 │
 ├── 📂 home/
 │   ├── home.component.ts
+│   └── home-routing.module.ts
 │   └── home.module.ts
 │
 ├── 📂 recipes/
