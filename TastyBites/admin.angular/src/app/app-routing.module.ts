@@ -25,10 +25,15 @@ const routes: Routes = [
     loadChildren: () =>
       import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
   },
+  {
+    path: 'recipes',
+    loadChildren: () =>
+      import('./recipes/recipes.module').then(m => m.RecipesModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {})],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
