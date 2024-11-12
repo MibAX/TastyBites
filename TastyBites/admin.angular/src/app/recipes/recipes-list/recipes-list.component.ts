@@ -10,4 +10,8 @@ export class RecipesListComponent {
 
   recipes: RecipeDto[] = [];
 
+  constructor() {
+    console.log('RecipesListComponent > constructor');
+  }
+
 }
