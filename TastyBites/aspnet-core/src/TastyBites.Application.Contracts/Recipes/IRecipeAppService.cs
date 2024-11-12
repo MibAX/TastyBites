@@ -13,5 +13,7 @@ namespace TastyBites.Recipes
              PagedAndSortedResultRequestDto>
     {
         Task<List<RecipeDto>> GetRecentAsync(int count = 3);
+
+        Task<List<RecipeDto>> GetAllRecipesAsync();
     }
 }
