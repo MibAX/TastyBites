@@ -1188,7 +1188,7 @@ abp generate-proxy -t ng
 ```
 
 
-### 08.06 - Declare The  `Recipes` Variable
+### 08.06 - Declaring The  `Recipes` Variable
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
@@ -1197,7 +1197,7 @@ Location:
   recipes: RecipeDto[] = [];
 ```
 
-### 08.07 - Creating the Constructor if It Does Not Exist
+### 08.07 - Creating the Constructor Function
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > `RecipesListComponent`
@@ -1234,14 +1234,19 @@ Location:
 
 long version
 ```typescript
-  constructor(private recipeAdminSvc: RecipeAdminService) {
+  private recipeAdminSvc: RecipeAdminService;
+
+  constructor(recipeAdminService: RecipeAdminService) {
     console.log('RecipesListComponent > constructor');
+    this.recipeAdminSvc = recipeAdminService;
   }
 ```
 
 short version
 ```typescript
-private recipeAdminService: RecipeAdminService
+  constructor(private recipeAdminSvc: RecipeAdminService) {
+    console.log('RecipesListComponent > constructor');
+  }
 ```
 
 ### 08.10 - Arrow Functions
