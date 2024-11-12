@@ -114,6 +114,15 @@ namespace TastyBites.Recipes
             return recentRecipeDtos;
         }
 
+        public async Task<List<RecipeDto>> GetAllRecipesAsync()
+        {
+            var recipes = await _recipesRepository.GetListAsync();
+
+            var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
+
+            return recipeDtos;
+        }
+
 
 
 
