@@ -1280,12 +1280,12 @@ An Observable is like a stream of data that you can watch and react to.
 
 **Clarifying Story**
 
-A restaurant has an agreement with you to try their meals and provide feedback. Each week, they send you a meal = (recipe-bundle) = (a set of recipes e.g., Burger + Fries + Drink) to try. Once the recipe-bundle arrives, you try and evaluate and provide feedback for the entire recipe-bundle: either **"LIKE"** if it meets your standards or **"DISLIKE"** if it doesn’t. 
+A restaurant has an agreement with you to try their meals and provide feedback. Each week, they send you a meal = (recipe-bundle) = (a set of recipes e.g., Burger + Fries + Drink) to try. Once the meal arrives, you try and evaluate and provide feedback for each meal: either **"LIKE"** if it meets your standards or **"DISLIKE"** if it doesn’t. 
 
-- **Observable** = The stream of weekly recipe-bundles (The continuous flow of recipe-bundles sent by the restaurant every week).  
-- **Subscription** = The agreement that enables you to receive these recipe bundles.  
-- **Data emitted** = Weekly Recipe Bundle (Each emitted value is a bundle of recipes e.g., Burger + Fries + Drink).  
-- **Observer** = The process of trying and providing feedback for each recipe bundle as a whole (Handles the bundle and gives feedback: "Adopt" or "Reject").  
+- **Observable** = The stream of weekly sent meals.
+- **Subscription** = The agreement that enables you to receive these meals.
+- **Data emitted** = A Meal.
+- **Observer** = The process of trying and providing feedback.
 
 
 ### 08.12 - RecipeDto, RecipeDto[], & Observable<RecipeDto[]>
