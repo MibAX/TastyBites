@@ -1210,7 +1210,7 @@ Location:
 
 Explanation: The constructor is used to initialize the component. For now, it's empty because we haven't added any dependencies.
 
-### 08.08 - Implementing `OnInit`
+### 08.08 - Implementing the `OnInit` Interface
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
@@ -1280,7 +1280,7 @@ An Observable is like a stream of data that you can watch and react to.
 
 **Clarifying Story**
 
-A company makes an agreement with you to test their recipes and provide feedback. Every week, they send you a bundle of recipes to try. Once the bundle arrives, you eat and try dishes such as Pasta, Pizza, and Salad, and evaluate each one. After testing, you provide your feedback for the bundle as a whole: either an "Adopt" if you think the bundle is good or "Reject" if it doesn't meet the standards.  
+A restaurant has an agreement with you to test their meals and provide feedback. Each week, they send you a meal = (recipe bundle) = (a set of recipes e.g., Burger + Fries + Drink) to try. Once the bundle arrives, you taste and evaluate each item, then provide feedback for the entire bundle: either **"LIKE"** if it meets your standards or **"DISLIKE"** if it doesn’t. 
 
 - **Observable** = The stream of weekly recipe bundles (The continuous flow of recipe bundles sent by the company every week).  
 - **Subscription** = The agreement that enables you to receive these recipe bundles.  
