@@ -17,6 +17,21 @@ export class RecipesListComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('RecipesListComponent > ngOnInit!');
+
+    const recipesHandler: (receivedRecipes: RecipeDto[]) => void
+      =
+      (receivedRecipes: RecipeDto[]): void => {
+        this.recipes = receivedRecipes;
+        console.log('My Recipes:', this.recipes);
+      }
+      ;
+
   }
+
+  handleRecipes(receivedRecipes: RecipeDto[]): void {
+    this.recipes = receivedRecipes;
+    console.log('My Recipes:', this.recipes);
+  }
+
 
 }
