@@ -18,7 +18,9 @@ export class RecipesListComponent implements OnInit {
   ngOnInit(): void {
     console.log('RecipesListComponent > ngOnInit!');
 
-    const recipesHandler: (receivedRecipes: RecipeDto[]) => void
+    const recipesObservable = this.recipeAdminSvc.getAllRecipes();
+
+    const recipesHandlerObserver: (receivedRecipes: RecipeDto[]) => void
       =
       (receivedRecipes: RecipeDto[]): void => {
         this.recipes = receivedRecipes;
@@ -26,11 +28,9 @@ export class RecipesListComponent implements OnInit {
       }
       ;
 
-  }
+    recipesObservable.subscribe(recipesHandlerObserver);
 
-  handleRecipes(receivedRecipes: RecipeDto[]): void {
-    this.recipes = receivedRecipes;
-    console.log('My Recipes:', this.recipes);
+    console.log('a log after subscribing');
   }
 
 
