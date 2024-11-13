@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RecipeDto } from '@proxy/recipes';
+import { RecipeAdminService, RecipeDto } from '@proxy/recipes';
 
 @Component({
   selector: 'app-recipes-list',
@@ -10,8 +10,9 @@ export class RecipesListComponent implements OnInit {
 
   recipes: RecipeDto[] = [];
 
-  constructor() {
+  constructor(private recipeAdminSvc: RecipeAdminService) {
     console.log('RecipesListComponent > constructor');
+
   }
 
   ngOnInit(): void {
