@@ -1280,11 +1280,11 @@ An Observable is like a stream of data that you can watch and react to.
 
 **Clarifying Story**
 
-A restaurant has an agreement with you to test their meals and provide feedback. Each week, they send you a meal = (recipe bundle) = (a set of recipes e.g., Burger + Fries + Drink) to try. Once the bundle arrives, you taste and evaluate each item, then provide feedback for the entire bundle: either **"LIKE"** if it meets your standards or **"DISLIKE"** if it doesn’t. 
+A restaurant has an agreement with you to try their meals and provide feedback. Each week, they send you a meal = (recipe bundle) = (a set of recipes e.g., Burger + Fries + Drink) to try. Once the bundle arrives, you taste and evaluate each item, then provide feedback for the entire bundle: either **"LIKE"** if it meets your standards or **"DISLIKE"** if it doesn’t. 
 
 - **Observable** = The stream of weekly recipe bundles (The continuous flow of recipe bundles sent by the company every week).  
 - **Subscription** = The agreement that enables you to receive these recipe bundles.  
-- **Data emitted** = Weekly Recipe Bundle (Each emitted value is a bundle of recipes like [Pasta, Pizza, Salad]).  
+- **Data emitted** = Weekly Recipe Bundle (Each emitted value is a bundle of recipes e.g., Burger + Fries + Drink).  
 - **Observer** = The process of trying and providing feedback for each recipe bundle as a whole (Handles the bundle and gives feedback: "Adopt" or "Reject").  
 
 
