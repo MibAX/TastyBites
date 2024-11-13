@@ -1317,6 +1317,8 @@ Location:
       };
 
     recipesObservable.subscribe(recipesHandlerObserver);
+
+    console.log('a log after subscribing');
 ```
 ### 08.14 - How Programmers Usually Use Proxy Observables
 
