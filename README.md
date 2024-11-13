@@ -1274,7 +1274,7 @@ Arrow Function
       ;
 ```
 
-### 08.11 - Observable, Subscription, Data emitted, & Observer
+### 08.11 - RxJS: Observable, Subscription, Data Emission, and Observer
 
 An Observable is like a stream of data that you can watch and react to.
 
