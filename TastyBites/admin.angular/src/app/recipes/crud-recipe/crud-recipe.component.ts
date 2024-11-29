@@ -28,4 +28,8 @@ export class CrudRecipeComponent implements OnInit {
 
   }
 
+  cancel(): void {
+    this.router.navigate(["/recipes/list"])
+  }
+
 }
