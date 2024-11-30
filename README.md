@@ -1511,9 +1511,9 @@ implements OnInit
 ```
 
 ```typescript
-ngOnInit(): void {
-  console.log('CreateRecipeComponent > ngOnInit');
-}
+  ngOnInit(): void {
+    console.log('CrudRecipeComponent > ngOnInit');
+  }
 ```
 
 
@@ -1587,12 +1587,13 @@ Check the changes in Angular.json
 ```html
 <div class="card">
   <div class="card-header">
-    ... header ...
+    this is the card header
   </div>
   <div class="card-body">
-    ... body ...
+    this is the card body
   </div>
 </div>
+
 ```
 
 ### 09.15 - HTML: Preparing the Grid
@@ -1684,7 +1685,7 @@ The updated form should look something like this:
     </form>
 ``` 
 
-### 09.20 - HTML: Adding the Name Form Fields
+### 09.20 - HTML: Adding the ``Name`` Form Fields
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
