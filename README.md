@@ -2081,7 +2081,65 @@ In this lecture, we update the recipe routes to be more user-friendly. Instead o
 **⚠️ Note :**  
 > Be sure to update all references in your application from `/recipes/crud` and `/recipes/crud/:id` to `/recipes/create` and `/recipes/edit/:id` respectively. This includes any navigation links or redirects in your code.
 
-### 10.19 Summary
+### 10.19 Simplifying Navigation Menus
+
+In this lecture, we simplify the navigation structure. Instead of having sub-menus under "Recipes" (one for listing and one for create/edit), the parent menu now leads directly to the Recipes list, which contains buttons for creating and editing recipes.
+
+**Location:**  
+`src`/`app`/`route.provider.ts`
+
+
+**⚠️ Note :**  
+> The only change here is the addition of `/list` to the route. This small update directs the Recipes menu to point directly to the recipes list.
+
+**Before:**
+
+```typescript
+      {
+        path: '/recipes',
+        name: '::Menu:Recipes',
+        iconClass: 'fas fa-home',
+        order: 2,
+        layout: eLayoutType.application,
+      }
+```
+
+**After:**
+
+```typescript
+      {
+        path: '/recipes/list',
+        name: '::Menu:Recipes',
+        iconClass: 'fas fa-home',
+        order: 2,
+        layout: eLayoutType.application,
+      }
+```
+
+
+**🗑️ Deleted Menus:**  
+(No need to copy these sections; this code should be deleted)
+
+```typescript
+      {
+        path: '/recipes/list',
+        name: '::Menu:RecipesList',
+        parentName: '::Menu:Recipes',
+        iconClass: 'fas fa-home',
+        order: 1,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/recipes/crud',
+        name: '::Menu:CrudRecipe',
+        parentName: '::Menu:Recipes',
+        iconClass: 'fas fa-home',
+        order: 2,
+        layout: eLayoutType.application,
+      },
+```
+
+### 10.20 Summary
 
 In this chapter, we extended the CRUD functionality for recipe management by implementing editing capabilities. We accomplished the following:
 
