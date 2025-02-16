@@ -1648,7 +1648,7 @@ Check the changes in Angular.json
         </button>
 ```
 
-### 09.18 - HTML: Wrapping the ``Card Body Row`` with a Form Element
+### 09.18 - HTML: Wrapping the `Card Body Row` within a Form Element
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
