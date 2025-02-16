@@ -2055,7 +2055,7 @@ In this lecture, we update the recipe routes to be more user-friendly. Instead o
 
 
 **⚠️ Note :**  
-> The only change here is replacing `/crud` with `/create` for new recipes and `/crud/:id` with `/edit/:id` for editing existing recipes.
+> The change here is replacing `/crud` with `/create` for new recipes and `/crud/:id` with `/edit/:id` for editing existing recipes.
 
 **Before:**
 
@@ -2094,7 +2094,7 @@ In this lecture, we simplify the navigation structure. Instead of having sub-men
 
 
 **⚠️ Note :**  
-> The only change here is the addition of `/list` to the route. This small update directs the Recipes menu to point directly to the recipes list.
+> The change here is the addition of `/list` to the parent route. This small update directs the Recipes menu to point directly to the recipes list.
 
 **Before:**
 
