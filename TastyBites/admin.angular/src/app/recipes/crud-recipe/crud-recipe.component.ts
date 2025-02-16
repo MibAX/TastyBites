@@ -90,22 +90,6 @@ export class CrudRecipeComponent implements OnInit {
         console.log('Recipe updated successfully', response);
         this.router.navigate(["/recipes/list"]);
       });
-
-      this.recipeAdminSvc.update(this.recipeId, this.recipeFormGroup.value).subscribe(
-        res => {
-          console.log('HTTP response', res);
-          this.router.navigate(['/recipes']);
-        },
-        err => {
-          console.log('HTTP Error', err);
-        },
-        () => {
-          console.log('HTTP request completed.');
-        }
-      );
-
-
-
     } else {
       // Create new recipe
       this.recipeAdminSvc.create(this.recipeFormGroup.value).subscribe(response => {
