@@ -2046,46 +2046,7 @@ Ensure that each recipe row has an edit button that navigates to the editing rou
 </ngx-datatable-column>
 ```
 
-### 10.18 Updating Recipe Routes for Better UX
-
-In this lecture, we update the recipe routes to be more user-friendly. Instead of using the term "crud," which is more programmer-centric, we adopt intuitive route names that clearly describe the actions:
-
-**Location:**  
-`src`/`app`/`recipes`/`recipes-routing.module.ts`
-
-
-**⚠️ Note :**  
-> The change here is replacing `/crud` with `/create` for new recipes and `/crud/:id` with `/edit/:id` for editing existing recipes.
-
-**Before:**
-
-```typescript
-{
-  path: 'crud',
-  component: CrudRecipeComponent
-},
-{
-  path: 'crud/:id',
-  component: CrudRecipeComponent
-}
-```
-
-**After:**
-
-```typescript
-{
-  path: 'create',
-  component: CrudRecipeComponent
-},
-{
-  path: 'edit/:id',
-  component: CrudRecipeComponent
-}
-```
-**⚠️ Note :**  
-> Be sure to update all references in your application from `/recipes/crud` and `/recipes/crud/:id` to `/recipes/create` and `/recipes/edit/:id` respectively. This includes any navigation links or redirects in your code.
-
-### 10.19 Simplifying Navigation Menus
+### 10.189 Simplifying Navigation Menus
 
 In this lecture, we simplify the navigation structure. Instead of having sub-menus under "Recipes" (one for listing and one for create/edit), the parent menu now leads directly to the Recipes list, which contains buttons for creating and editing recipes.
 
@@ -2142,6 +2103,47 @@ In this lecture, we simplify the navigation structure. Instead of having sub-men
         layout: eLayoutType.application,
       },
 ```
+
+
+### 10.19 Updating Recipe Routes for Better UX
+
+In this lecture, we update the recipe routes to be more user-friendly. Instead of using the term "crud," which is more programmer-centric, we adopt intuitive route names that clearly describe the actions:
+
+**Location:**  
+`src`/`app`/`recipes`/`recipes-routing.module.ts`
+
+
+**⚠️ Note :**  
+> The change here is replacing `/crud` with `/create` for new recipes and `/crud/:id` with `/edit/:id` for editing existing recipes.
+
+**Before:**
+
+```typescript
+{
+  path: 'crud',
+  component: CrudRecipeComponent
+},
+{
+  path: 'crud/:id',
+  component: CrudRecipeComponent
+}
+```
+
+**After:**
+
+```typescript
+{
+  path: 'create',
+  component: CrudRecipeComponent
+},
+{
+  path: 'edit/:id',
+  component: CrudRecipeComponent
+}
+```
+**⚠️ Note :**  
+> Be sure to update all references in your application from `/recipes/crud` and `/recipes/crud/:id` to `/recipes/create` and `/recipes/edit/:id` respectively. This includes any navigation links or redirects in your code.
+
 
 ### 10.20 Summary
 
