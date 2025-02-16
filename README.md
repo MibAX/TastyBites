@@ -2117,7 +2117,7 @@ In this lecture, we simplify the navigation structure. Instead of having sub-men
 ```
 
 
-**🗑️ Deleted Menus:**  
+**🗑️ Deleted sub-menus:**  
 (No need to copy these sections; this code should be deleted)
 
 ```typescript
