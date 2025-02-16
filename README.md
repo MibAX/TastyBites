@@ -2055,7 +2055,7 @@ In this lecture, we update the recipe routes to be more user-friendly. Instead o
 
 
 **⚠️ Note :**  
-The only change here is replacing `/crud` with `/create` for new recipes and `/crud/:id` with `/edit/:id` for editing existing recipes.
+> The only change here is replacing `/crud` with `/create` for new recipes and `/crud/:id` with `/edit/:id` for editing existing recipes.
 
 **Before:**
 
