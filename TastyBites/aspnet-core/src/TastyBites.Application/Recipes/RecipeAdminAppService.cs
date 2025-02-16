@@ -54,6 +54,8 @@ namespace TastyBites.Recipes
         {
             var recipe = await _recipesRepository.GetAsync(id);
 
+            input.Id = recipe.Id;
+
             // Only the available values from the input DTO will be applied to the recipe entity.
             // IMPORTANT: Any values not present in the DTO will remain unchanged in the recipe.
             ObjectMapper.Map<RecipeDto, Recipe>(input, recipe);
