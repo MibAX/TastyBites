@@ -1972,12 +1972,23 @@ Test the functionality by navigating to a URL such as `/recipes/crud/39` to veri
 - The form loads with the existing recipe data.  
 - Editing the fields and clicking the save button triggers the update process.
 
-### 10.14 Troubleshooting Internal Request Errors  
-If you encounter internal request errors during the update process, follow these steps to view the backend log files using Visual Studio 2022:
+### 10.14 Troubleshooting Internal Request Errors
 
-1. In **Solution Explorer**, right-click on the `TastyBites.HttpApi.Host` host project.
+To check backend error logs:
+
+1. In **Solution Explorer**, right-click on the `TastyBites.HttpApi.Host` project.
 2. Navigate to the **log** folder.
 3. Open the latest log file using Notepad++ to review any error messages.
+
+**Fix:**  
+Ensure that the following line is included in the `UpdateAsync` method to correctly set the DTO's Id:
+
+**Location:**  
+`src`/`TastyBites.Application`/`Recipes`/`RecipeAdminAppService.cs` > *UpdateAsync method*
+
+```csharp
+input.Id = recipe.Id;
+```
 
 ### 10.15 Wrapping Recipes List Within a Bootstrap Card  
 Enhance the UI of the recipes list by wrapping it in a Bootstrap card.
