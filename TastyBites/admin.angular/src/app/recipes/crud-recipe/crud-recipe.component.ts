@@ -38,9 +38,10 @@ export class CrudRecipeComponent implements OnInit {
       this.isEditMode = true;
 
       // load recipe from backend
+      this.recipeAdminSvc.get(this.recipeId).subscribe(response => {
+        // Populate the form with the retrieved recipe data
 
-
-
+      });
 
     });
 
