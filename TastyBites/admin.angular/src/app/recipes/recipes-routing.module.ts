@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: 'crud',
     component: CrudRecipeComponent
+  },
+  {
+    path: 'crud/:id',
+    component: CrudRecipeComponent
   }
 ];
 
