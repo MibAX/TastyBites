@@ -40,6 +40,10 @@ export class CrudRecipeComponent implements OnInit {
       // load recipe from backend
       this.recipeAdminSvc.get(this.recipeId).subscribe(response => {
         // Populate the form with the retrieved recipe data
+        this.recipeFormGroup.patchValue({
+          name: response.name,
+          description: response.description
+        });
 
       });
 
