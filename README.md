@@ -1932,7 +1932,7 @@ Change the button label based on the mode to reflect either creating or updating
 
 ```html
         <button type="button" mat-stroked-button color="primary" (click)="saveRecipe()">
-          {{ isEditMode ? 'Update' : 'Create' }}
+          {{ isEditMode ? 'Save' : 'Create' }}
         </button>
 ```
 
