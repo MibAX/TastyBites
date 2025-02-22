@@ -52,6 +52,8 @@ namespace TastyBites.Recipes
 
         public override async Task<RecipeDto> UpdateAsync(int id, RecipeDto input)
         {
+            input.Id = id;
+
             var recipe = await _recipesRepository.GetAsync(id);
 
             // Only the available values from the input DTO will be applied to the recipe entity.
